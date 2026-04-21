@@ -29,14 +29,15 @@ class _HomePageState extends State<HomePage> {
   String message = "";
 
   void calculate() {
-    double weeklyHours = double.parse(weeklyController.text);
+    double weekly = double.parse(weeklyController.text);
 
     setState(() {
-      double dailyAverage = weeklyHours / 7;
+      weeklyHours = weekly;
+      dailyAverage = weeklyHours / 7;
 
       if (dailyAverage < 3) {
         performance = "Poor";
-        message = "You need to study more!";
+        message = "You can do better!";
       } else if (dailyAverage < 6) {
         performance = "Average";
         message = "You are doing great! Keep it up!";
@@ -50,12 +51,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Study Tracker")),
+      appBar: AppBar(title: const Text("Study Tracker"), centerTitle: true),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset("assets/images/book.png", height: 200),
           TextField(
             controller: weeklyController,
+            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Enter Weekly Study Hours',
@@ -68,9 +71,9 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 20),
 
           Text("Weekly Hours: $weeklyHours"),
-          Text("Daily Average: $dailyAverage"),
+          Text("Daily Average: ${dailyAverage.toStringAsFixed(2)}"),
           Text("Performance: $performance"),
-          Text("Message: $message"),
+          Text(message),
         ],
       ),
     );
