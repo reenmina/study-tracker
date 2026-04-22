@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  audioplayers: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +21,10 @@ flutter:
   
   assets:
     - assets/images/book.png
+    - assets/images/poor.png
+    - assets/images/average.png
+    - assets/images/excellent.png
+    - assets/images/study.png
+    - assets/audio/dissapointed.mp3
+    - assets/audio/yeay.mp3
+    - assets/audio/applause.mp3

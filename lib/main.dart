@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MainApp());
@@ -27,6 +28,9 @@ class _HomePageState extends State<HomePage> {
   double dailyAverage = 0;
   String performance = "";
   String message = "";
+  String imagePath = 'assets/images/study.png';
+
+  final audioplayer = AudioPlayer();
 
   void calculate() {
     double weekly = double.parse(weeklyController.text);
@@ -35,15 +39,21 @@ class _HomePageState extends State<HomePage> {
       weeklyHours = weekly;
       dailyAverage = weeklyHours / 7;
 
-      if (dailyAverage < 3) {
+      if (dailyAverage < 2) {
         performance = "Poor";
         message = "You can do better!";
-      } else if (dailyAverage < 6) {
+        imagePath = 'assets/images/poor.png';
+        audioplayer.play(AssetSource('audio/dissapointed.mp3'));
+      } else if (dailyAverage < 4) {
         performance = "Average";
         message = "You are doing great! Keep it up!";
+        imagePath = 'assets/images/average.png';
+        audioplayer.play(AssetSource('audio/yeay.mp3'));
       } else {
         performance = "Excellent";
         message = "Amazing! Your efforts will not betray you!";
+        imagePath = 'assets/images/excellent.png';
+        audioplayer.play(AssetSource('audio/applause.mp3'));
       }
     });
   }
@@ -64,24 +74,20 @@ class _HomePageState extends State<HomePage> {
               labelText: 'Enter Weekly Study Hours',
             ),
           ),
-          const SizedBox(height: 20),
 
+          const SizedBox(height: 20),
           ElevatedButton(onPressed: calculate, child: const Text("Calculate")),
 
           const SizedBox(height: 20),
-
           Text("Weekly Hours: $weeklyHours"),
           Text("Daily Average: ${dailyAverage.toStringAsFixed(2)}"),
           Text("Performance: $performance"),
           Text(message),
+
+          const SizedBox(height: 20),
+          Image.asset(imagePath, height: 200, width: 200),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    weeklyController.dispose();
-    super.dispose();
   }
 }
